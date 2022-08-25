@@ -19,22 +19,18 @@ var id = 1
 func products() {
 	data := db()
 	defer data.Close()
-	excel1, err := excelize.OpenFile("C:/Users/bhuvi/task (1)/task/product_details.xlsx")
+	excel1, err := excelize.OpenFile("product_details.xlsx")
 	whileerr(err)
 	sh1, err := excel1.GetRows("Sheet1")
 	whileerr(err)
-	fmt.Println("ok1")
 	for _, rows := range sh1 {
 		result, err := data.Query("SELECT product_id from product_stock")
-		if err != nil {
-			fmt.Println("problem")
-		}
+		whileerr(err)
 		var product_id int
 		var list_of_id []int
 		for result.Next() {
 			result.Scan(&product_id)
 			list_of_id = append(list_of_id, product_id)
-			fmt.Println(list_of_id)
 		}
 		val, _ := strconv.Atoi(rows[0])
 		var ispresent bool = true
